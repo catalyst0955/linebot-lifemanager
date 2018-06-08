@@ -11,4 +11,9 @@ public class DemoCtl {
     public String test(){
         return "index";
     }
+
+    @RequestMapping("/start")
+    public String test2(){
+        return "foldeer/index2";
+    }
 }
