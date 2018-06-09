@@ -14,7 +14,7 @@ import java.util.Properties;
 public class LineBotService {
     Map<String, String> valueMap;
 
-    public void setValue () {
+    public void setValue (String path) {
         Map<String, String> picMap = new HashMap<>();
         picMap.put("南非召喚", "https://i.imgur.com/BsOco1k.gif");
         picMap.put("羈押", "https://i.imgur.com/ac0BUWS.jpg");
@@ -33,9 +33,7 @@ public class LineBotService {
 
         Properties prop = new Properties();
         try{
-            prop.load(new FileInputStream( ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/prop/img.properties").build()
-                    .toUriString()));
+            prop.load(new FileInputStream( path));
         } catch (Exception e) {
             e.printStackTrace();
         }
