@@ -35,19 +35,21 @@ public class LineSpringBootCtl {
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         System.out.println("event: " + event);
-
+        String path = createUri("/static/img/96322.jpg");
+        System.out.println("***********************" + path);
         handleHeavyContent(
                 event.getReplyToken(),
                 event.getMessage().getId(),
                 responseBody -> {
-                    String path = createUri("/static/img/96322.jpg");
+                    String path2 = createUri("/static/img/96322.jpg");
+                    System.out.println("***************************"+path2);
                     system(
                             "convert",
                             "-resize", "240x",
-                            path,
-                            path);
+                            path2,
+                            path2);
                     reply(((MessageEvent) event).getReplyToken(),
-                            new ImageMessage(path, path));
+                            new ImageMessage(path2, path2));
                 });
 
 
