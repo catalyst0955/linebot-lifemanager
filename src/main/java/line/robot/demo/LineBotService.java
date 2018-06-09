@@ -1,15 +1,15 @@
 package line.robot.demo;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Service
 public class LineBotService {
     Map<String, String> valueMap;
 
-    LineBotService() {
+    public void setValue () {
         Map<String, String> picMap = new HashMap<>();
         picMap.put("南非召喚", "https://i.imgur.com/BsOco1k.gifv");
         picMap.put("羈押", "https://i.imgur.com/ac0BUWS.jpg");
@@ -31,6 +31,10 @@ public class LineBotService {
             result = valueMap.get(key);
         }
         return result;
+    }
+
+    public String getKeySet(){
+        return valueMap.keySet().toString();
     }
 
 }

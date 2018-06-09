@@ -12,11 +12,12 @@ import java.util.Map;
 @SpringBootApplication
 @LineMessageHandler
 public class DemoApplication {
-
-
+    @Autowired
+     static LineBotService lineBotService;
 
     public static void main(String[] args) {
 
+        lineBotService.setValue();
         SpringApplication.run(DemoApplication.class, args);
 
     }

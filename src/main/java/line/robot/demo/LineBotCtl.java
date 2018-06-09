@@ -6,7 +6,6 @@ import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
-import com.linecorp.bot.model.event.message.ImageMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.ImageMessage;
 import com.linecorp.bot.model.message.Message;
@@ -29,13 +28,16 @@ public class LineBotCtl {
 
     @Autowired
     private LineMessagingClient lineMessagingClient;
-
+    @Autowired
     private LineBotService lineBotService;
 
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         String msg = event.getMessage().getText();
+        if(msg == "!指令"){
+            replyText(event.getReplyToken(),lineBotService.getKeySet());
+        }
         String fromServicePic = lineBotService.getPic(msg);
         //String path2 = createUri("/static/img/96322.jpg");
         //String pathFromUrl = "https://i.imgur.com/40FM8jK.jpg";
@@ -92,6 +94,16 @@ public class LineBotCtl {
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void replyText(@NonNull String replyToken, @NonNull String message) {
+        if (replyToken.isEmpty()) {
+            throw new IllegalArgumentException("replyToken must not be empty");
+        }
+        if (message.length() > 1000) {
+            message = message.substring(0, 1000 - 2) + "……";
+        }
+        this.reply(replyToken, new TextMessage(message));
     }
 
 }
