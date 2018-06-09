@@ -17,6 +17,12 @@ public class DemoApplication {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
         LineBotService lineBotService = applicationContext.getBean(LineBotService.class);
 
+        System.out.println(applicationContext.getEnvironment());
+        System.out.println(applicationContext.getApplicationName());
+        System.out.println(applicationContext.getDisplayName());
+        System.out.println(applicationContext.getId());
+
+
         lineBotService.setValue(PATH);
 
     }
