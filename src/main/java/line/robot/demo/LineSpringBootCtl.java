@@ -40,7 +40,7 @@ public class LineSpringBootCtl {
                 event.getReplyToken(),
                 event.getMessage().getId(),
                 responseBody -> {
-                    String path = "/static/img/96322.jpg";
+                    String path = createUri("/static/img/96322.jpg");
                     system(
                             "convert",
                             "-resize", "240x",
