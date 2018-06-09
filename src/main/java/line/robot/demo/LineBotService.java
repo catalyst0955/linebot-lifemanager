@@ -11,7 +11,7 @@ public class LineBotService {
 
     public void setValue () {
         Map<String, String> picMap = new HashMap<>();
-        picMap.put("南非召喚", "https://i.imgur.com/BsOco1k.gifv");
+        picMap.put("南非召喚", "https://i.imgur.com/BsOco1k.gif");
         picMap.put("羈押", "https://i.imgur.com/ac0BUWS.jpg");
         picMap.put("錢包君1", "https://i.imgur.com/WtNrmCi.jpg");
         picMap.put("賣萌", "https://i.imgur.com/x17YqKi.jpg");
@@ -19,6 +19,11 @@ public class LineBotService {
         picMap.put("什麼都沒有", "https://i.imgur.com/mCRGPgW.jpg");
         picMap.put("萌新三連", "https://i.imgur.com/SAPBVzy.jpg");
         picMap.put("萌新", "https://i.imgur.com/XiPQKCR.jpg");
+        picMap.put("絕望", "https://i.imgur.com/M9h7HWV.jpg");
+        picMap.put("牛逼", "https://i.imgur.com/NBRRTfl.jpg");
+        picMap.put("鹹魚", "https://i.imgur.com/uUMmC5Q.jpg");
+        picMap.put("燒", "https://i.imgur.com/5LbIIRv.jpg");
+        picMap.put("大佬", "https://i.imgur.com/Ci5qJdB.jpg");
         this.valueMap = picMap;
 
 
