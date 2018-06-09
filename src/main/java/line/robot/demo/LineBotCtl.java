@@ -24,21 +24,25 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
 @LineMessageHandler
-public class LineSpringBootCtl {
+public class LineBotCtl {
 
 
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
-
+    private LineBotService lineBotService;
 
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-
+        String msg = event.getMessage().getText();
+        String fromServicePic = lineBotService.getPic(msg);
         String path2 = createUri("/static/img/96322.jpg");
         String pathFromUrl = "https://i.imgur.com/40FM8jK.jpg";
-        reply(event.getReplyToken(),new ImageMessage(pathFromUrl,pathFromUrl));
+        System.out.println("***********MSG****************" + "       " + msg);
+        System.out.println("***********fromServicePic****************" + "       " + fromServicePic);
+
+        reply(event.getReplyToken(),new ImageMessage(fromServicePic,fromServicePic));
 
     }
 
