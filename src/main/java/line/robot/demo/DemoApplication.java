@@ -11,7 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @LineMessageHandler
 public class DemoApplication {
 
-    static final String PATH = "https://triple-bon.herokuapp.com/post";
+    static final String PATH = "https://triple-bon.herokuapp.com";
     public static void main(String[] args) {
 
         ConfigurableApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
