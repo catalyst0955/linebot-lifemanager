@@ -13,5 +13,6 @@ public class LineBotWebMvcConfigurer extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/prop/**").addResourceLocations("classpath:/static/property/");
     }
 }

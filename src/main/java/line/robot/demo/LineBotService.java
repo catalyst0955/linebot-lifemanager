@@ -2,8 +2,12 @@ package line.robot.demo;
 
 import org.springframework.stereotype.Component;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 @Component
 public class LineBotService {
@@ -26,6 +30,16 @@ public class LineBotService {
         picMap.put("大佬", "https://i.imgur.com/Ci5qJdB.jpg");
         this.valueMap = picMap;
 
+        Properties prop = new Properties();
+        try{
+            prop.load(new FileInputStream("/porp/img.properites"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for(Object key : prop.keySet()){
+            Object value = prop.get(key);
+            System.out.println("Keys:" + key.toString() + "     value:" + value.toString());
+        }
 
     }
 
