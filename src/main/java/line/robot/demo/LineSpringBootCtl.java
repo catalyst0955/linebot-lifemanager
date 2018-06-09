@@ -31,14 +31,25 @@ public class LineSpringBootCtl {
     private LineMessagingClient lineMessagingClient;
 
 
-    @EventMapping
+    /*@EventMapping
     public ImageMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
 
         String path2 = createUri("/static/img/96322.jpg");
         return new ImageMessage(path2, path2);
 
         //return new TextMessage(event.getMessage().getText());
+    }*/
+
+    @EventMapping
+    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+
+        String path2 = createUri("/static/img/96322.jpg");
+        reply(event.getReplyToken(),new ImageMessage(path2,path2));
+
+        //return new TextMessage(event.getMessage().getText());
     }
+
+
 
     @EventMapping
     public void handleImageMessageEvent(MessageEvent<ImageMessageContent> event) {
