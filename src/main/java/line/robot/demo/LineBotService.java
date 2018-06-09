@@ -30,7 +30,7 @@ public class LineBotService {
 
         Properties prop = new Properties();
         try{
-            prop.load(new FileInputStream( path+"/prop/img.properties"));
+            prop.load(new FileInputStream( "classpath:/static/property/img.properties"));
         } catch (Exception e) {
             e.printStackTrace();
         }
