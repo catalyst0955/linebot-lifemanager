@@ -28,7 +28,6 @@ public class DemoCtl {
     @RequestMapping(value = "/post", method = RequestMethod.POST)
     public ResponseEntity receivePostAction(HttpServletRequest request, HttpServletResponse response) {
 
-        System.out.println(request.getParameter("message"));
         Map<String, String[]> parameterMap = request.getParameterMap();
         for(String key : parameterMap.keySet()){
             String[] valueSet = parameterMap.get(key);
