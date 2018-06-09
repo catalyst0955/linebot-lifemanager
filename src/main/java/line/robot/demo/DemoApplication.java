@@ -20,14 +20,9 @@ public class DemoApplication {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
         LineBotService lineBotService = applicationContext.getBean(LineBotService.class);
 
-        File file = null;
-        try {
-            file = applicationContext.getResource("/static/property/imgProperties").getFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        lineBotService.setValue(file);
+
+        lineBotService.setValue();
 
     }
 
