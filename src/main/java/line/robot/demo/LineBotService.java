@@ -1,5 +1,6 @@
 package line.robot.demo;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
@@ -30,7 +31,7 @@ public class LineBotService {
 
         Properties prop = new Properties();
         try{
-            prop.load(new FileInputStream( "classpath:/static/property/img.properties"));
+            prop.load(new FileInputStream( new ClassPathResource("/property/img.properties").getFile()));
         } catch (Exception e) {
             e.printStackTrace();
         }
