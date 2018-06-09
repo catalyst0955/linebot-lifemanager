@@ -1,6 +1,7 @@
 package line.robot.demo;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,7 +33,9 @@ public class LineBotService {
 
         Properties prop = new Properties();
         try{
-            prop.load(new FileInputStream("/porp/img.properites"));
+            prop.load(new FileInputStream( ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/prop/img.properties").build()
+                    .toUriString()));
         } catch (Exception e) {
             e.printStackTrace();
         }
