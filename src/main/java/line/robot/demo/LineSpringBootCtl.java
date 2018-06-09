@@ -18,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -34,20 +32,10 @@ public class LineSpringBootCtl {
 
 
     @EventMapping
-    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-        System.out.println("event: " + event);
-        String path = createUri("/static/img/96322.jpg");
-        System.out.println("***********************" + path);
-        handleHeavyContent(
-                event.getReplyToken(),
-                event.getMessage().getId(),
-                responseBody -> {
-                    String path2 = createUri("/static/img/96322.jpg");
-                    System.out.println("***************************"+path2);
-                    reply(((MessageEvent) event).getReplyToken(),
-                            new ImageMessage(path2, path2));
-                });
+    public ImageMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
 
+        String path2 = createUri("/static/img/96322.jpg");
+        return new ImageMessage(path2, path2);
 
         //return new TextMessage(event.getMessage().getText());
     }
