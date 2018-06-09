@@ -31,44 +31,17 @@ public class LineSpringBootCtl {
     private LineMessagingClient lineMessagingClient;
 
 
-    /*@EventMapping
-    public ImageMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
 
-        String path2 = createUri("/static/img/96322.jpg");
-        return new ImageMessage(path2, path2);
-
-        //return new TextMessage(event.getMessage().getText());
-    }*/
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
 
         String path2 = createUri("/static/img/96322.jpg");
-        reply(event.getReplyToken(),new ImageMessage(path2,path2));
+        String pathFromUrl = "https://i.imgur.com/40FM8jK.jpg";
+        reply(event.getReplyToken(),new ImageMessage(pathFromUrl,pathFromUrl));
 
-        //return new TextMessage(event.getMessage().getText());
     }
 
-
-
-    @EventMapping
-    public void handleImageMessageEvent(MessageEvent<ImageMessageContent> event) {
-        System.out.println("event: " + event);
-        String path = createUri("/static/img/96322.jpg");
-        System.out.println("***********************" + path);
-        handleHeavyContent(
-                event.getReplyToken(),
-                event.getMessage().getId(),
-                responseBody -> {
-                    String path2 = createUri("/static/img/96322.jpg");
-                    System.out.println("***************************"+path2);
-                    reply(((MessageEvent) event).getReplyToken(),
-                            new ImageMessage(path2, path2));
-                });
-
-
-        //return new TextMessage(event.getMessage().getText());
-    }
 
 
 
