@@ -1,11 +1,8 @@
 package line.robot.demo;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -33,7 +30,7 @@ public class LineBotService {
 
         Properties prop = new Properties();
         try{
-            prop.load(new FileInputStream( path));
+            prop.load(new FileInputStream( path+"/img.properties"));
         } catch (Exception e) {
             e.printStackTrace();
         }

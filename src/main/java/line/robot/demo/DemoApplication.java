@@ -11,21 +11,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @LineMessageHandler
 public class DemoApplication {
 
-
-
-
+    static final String PATH = "https://triple-bon.herokuapp.com/post";
     public static void main(String[] args) {
 
-        ConfigurableApplicationContext applicationContext=SpringApplication.run(DemoApplication.class, args);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
         LineBotService lineBotService = applicationContext.getBean(LineBotService.class);
 
-        lineBotService.setValue(ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/prop/img.properties").build()
-                .toUriString());
+        lineBotService.setValue(PATH);
 
     }
-
-
 
 
 }
