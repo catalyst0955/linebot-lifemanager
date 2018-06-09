@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -32,7 +33,7 @@ public class LineBotService {
 
         Properties prop = new Properties();
         try{
-            prop.load(new ClassPathResource("/static/property/img.properties").getInputStream());
+            prop.load(new InputStreamReader(new ClassPathResource("/static/property/img.properties").getInputStream(),"UTF-8") );
         } catch (Exception e) {
             e.printStackTrace();
         }
