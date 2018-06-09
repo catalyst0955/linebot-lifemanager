@@ -3,6 +3,7 @@ package line.robot.demo;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Properties;
 public class LineBotService {
     Map<String, String> valueMap;
 
-    public void setValue (String path) {
+    public void setValue (File file) {
         Map<String, String> picMap = new HashMap<>();
         picMap.put("南非召喚", "https://i.imgur.com/BsOco1k.gif");
         picMap.put("羈押", "https://i.imgur.com/ac0BUWS.jpg");
@@ -31,7 +32,7 @@ public class LineBotService {
 
         Properties prop = new Properties();
         try{
-            prop.load(new FileInputStream( path+"/prop/img.properties"));
+            prop.load(new FileInputStream( file));
         } catch (Exception e) {
             e.printStackTrace();
         }

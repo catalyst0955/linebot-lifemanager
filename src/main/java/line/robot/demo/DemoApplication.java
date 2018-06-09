@@ -6,6 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.File;
+import java.io.IOException;
+
 
 @SpringBootApplication
 @LineMessageHandler
@@ -17,13 +20,14 @@ public class DemoApplication {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
         LineBotService lineBotService = applicationContext.getBean(LineBotService.class);
 
-        System.out.println(applicationContext.getEnvironment());
-        System.out.println(applicationContext.getApplicationName());
-        System.out.println(applicationContext.getDisplayName());
-        System.out.println(applicationContext.getId());
+        File file = null;
+        try {
+            file = applicationContext.getResource("/static/property/imgProperties").getFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-
-        lineBotService.setValue(PATH);
+        lineBotService.setValue(file);
 
     }
 
