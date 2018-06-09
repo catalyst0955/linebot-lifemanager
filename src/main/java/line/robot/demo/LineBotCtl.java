@@ -40,18 +40,13 @@ public class LineBotCtl {
         if(msg.equals("!指令")){
             System.out.println(lineBotService.getKeySet());
             replyText(event.getReplyToken(), lineBotService.getKeySet());
+        }else {
+            String fromServicePic = lineBotService.getPic(msg);
+            //String path2 = createUri("/static/img/96322.jpg");
+            if (!fromServicePic.isEmpty()) {
+                reply(event.getReplyToken(), new ImageMessage(fromServicePic, fromServicePic));
+            }
         }
-        String fromServicePic = lineBotService.getPic(msg);
-        //String path2 = createUri("/static/img/96322.jpg");
-        //String pathFromUrl = "https://i.imgur.com/40FM8jK.jpg";
-        System.out.println("***********MSG****************" + "       " + msg);
-        System.out.println("***********fromServicePic****************" + "       " + fromServicePic);
-        if(!fromServicePic.isEmpty()){
-            reply(event.getReplyToken(),new ImageMessage(fromServicePic,fromServicePic));
-        }else{
-            replyText(event.getReplyToken(),"查無訊息");
-        }
-
 
     }
 

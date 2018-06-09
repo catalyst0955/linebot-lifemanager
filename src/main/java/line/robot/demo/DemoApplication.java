@@ -18,7 +18,6 @@ public class DemoApplication {
         ConfigurableApplicationContext applicationContext=SpringApplication.run(DemoApplication.class, args);
         LineBotService lineBotService = applicationContext.getBean(LineBotService.class);
         lineBotService.setValue();
-        System.out.println(lineBotService.valueMap);
 
     }
 
