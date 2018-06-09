@@ -36,8 +36,10 @@ public class LineBotCtl {
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         String msg = event.getMessage().getText();
-        if(msg == "!指令"){
-            replyText(event.getReplyToken(),lineBotService.getKeySet());
+
+        if(msg.equals("!指令")){
+            System.out.println(lineBotService.getKeySet());
+            replyText(event.getReplyToken(), lineBotService.getKeySet());
         }
         String fromServicePic = lineBotService.getPic(msg);
         //String path2 = createUri("/static/img/96322.jpg");
@@ -47,7 +49,7 @@ public class LineBotCtl {
         if(!fromServicePic.isEmpty()){
             reply(event.getReplyToken(),new ImageMessage(fromServicePic,fromServicePic));
         }else{
-            System.out.println(event);
+            replyText(event.getReplyToken(),"查無訊息");
         }
 
 
