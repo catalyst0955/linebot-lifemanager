@@ -25,17 +25,17 @@ public class DemoCtl {
         return "folder/index2";
     }
 
-    @RequestMapping(value = "/post", method = RequestMethod.POST)
-    public ResponseEntity receivePostAction(HttpServletRequest request, HttpServletResponse response) {
-
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        for(String key : parameterMap.keySet()){
-            String[] valueSet = parameterMap.get(key);
-            System.out.println( "KEY : " + key + "   VALUES:" + valueSet);
-        }
-
-        response.setStatus(HttpServletResponse.SC_OK);
-
-        return new ResponseEntity(HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/post", method = RequestMethod.POST)
+//    public ResponseEntity receivePostAction(HttpServletRequest request, HttpServletResponse response) {
+//
+//        Map<String, String[]> parameterMap = request.getParameterMap();
+//        for(String key : parameterMap.keySet()){
+//            String[] valueSet = parameterMap.get(key);
+//            System.out.println( "KEY : " + key + "   VALUES:" + valueSet);
+//        }
+//
+//        response.setStatus(HttpServletResponse.SC_OK);
+//
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
 }
