@@ -43,11 +43,11 @@ public class LineSpringBootCtl {
                 responseBody -> {
                     String path2 = createUri("/static/img/96322.jpg");
                     System.out.println("***************************"+path2);
-                    system(
-                            "convert",
-                            "-resize", "240x",
-                            path2,
-                            path2);
+//                    system(
+//                            "convert",
+//                            "-resize", "240x",
+//                            path2,
+//                            path2);
                     reply(((MessageEvent) event).getReplyToken(),
                             new ImageMessage(path2, path2));
                 });
