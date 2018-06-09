@@ -41,8 +41,12 @@ public class LineBotCtl {
         String pathFromUrl = "https://i.imgur.com/40FM8jK.jpg";
         System.out.println("***********MSG****************" + "       " + msg);
         System.out.println("***********fromServicePic****************" + "       " + fromServicePic);
+        if(null != fromServicePic){
+            reply(event.getReplyToken(),new ImageMessage(fromServicePic,fromServicePic));
+        }else{
+            System.out.println(event);
+        }
 
-        reply(event.getReplyToken(),new ImageMessage(fromServicePic,fromServicePic));
 
     }
 
