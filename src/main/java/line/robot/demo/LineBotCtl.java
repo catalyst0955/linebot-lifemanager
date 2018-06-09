@@ -37,11 +37,11 @@ public class LineBotCtl {
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         String msg = event.getMessage().getText();
         String fromServicePic = lineBotService.getPic(msg);
-        String path2 = createUri("/static/img/96322.jpg");
-        String pathFromUrl = "https://i.imgur.com/40FM8jK.jpg";
+        //String path2 = createUri("/static/img/96322.jpg");
+        //String pathFromUrl = "https://i.imgur.com/40FM8jK.jpg";
         System.out.println("***********MSG****************" + "       " + msg);
         System.out.println("***********fromServicePic****************" + "       " + fromServicePic);
-        if(null != fromServicePic){
+        if(!fromServicePic.isEmpty()){
             reply(event.getReplyToken(),new ImageMessage(fromServicePic,fromServicePic));
         }else{
             System.out.println(event);

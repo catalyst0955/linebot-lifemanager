@@ -26,7 +26,11 @@ public class LineBotService {
 
 
     public String getPic(String key) {
-        return valueMap.get(key);
+        String result = "";
+        if(valueMap.containsKey(key)){
+            result = valueMap.get(key);
+        }
+        return result;
     }
 
 }
