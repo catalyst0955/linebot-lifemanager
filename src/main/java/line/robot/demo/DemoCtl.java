@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 
 @Controller
@@ -27,8 +28,12 @@ public class DemoCtl {
     @RequestMapping(value = "/post", method = RequestMethod.POST)
     public ResponseEntity receivePostAction(HttpServletRequest request, HttpServletResponse response) {
 
-        request.getParameter("message");
-        System.out.println( request.getParameterMap());
+        System.out.println(request.getParameter("message"));
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        for(String key : parameterMap.keySet()){
+            String[] valueSet = parameterMap.get(key);
+            System.out.println( "KEY : " + key + "   VALUES:" + valueSet);
+        }
 
         response.setStatus(HttpServletResponse.SC_OK);
 
