@@ -6,6 +6,7 @@ import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.ImageMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.ImageMessage;
 import com.linecorp.bot.model.message.Message;
@@ -43,11 +44,6 @@ public class LineSpringBootCtl {
                 responseBody -> {
                     String path2 = createUri("/static/img/96322.jpg");
                     System.out.println("***************************"+path2);
-//                    system(
-//                            "convert",
-//                            "-resize", "240x",
-//                            path2,
-//                            path2);
                     reply(((MessageEvent) event).getReplyToken(),
                             new ImageMessage(path2, path2));
                 });
@@ -55,6 +51,27 @@ public class LineSpringBootCtl {
 
         //return new TextMessage(event.getMessage().getText());
     }
+
+    @EventMapping
+    public void handleImageMessageEvent(MessageEvent<ImageMessageContent> event) {
+        System.out.println("event: " + event);
+        String path = createUri("/static/img/96322.jpg");
+        System.out.println("***********************" + path);
+        handleHeavyContent(
+                event.getReplyToken(),
+                event.getMessage().getId(),
+                responseBody -> {
+                    String path2 = createUri("/static/img/96322.jpg");
+                    System.out.println("***************************"+path2);
+                    reply(((MessageEvent) event).getReplyToken(),
+                            new ImageMessage(path2, path2));
+                });
+
+
+        //return new TextMessage(event.getMessage().getText());
+    }
+
+
 
     @EventMapping
     public void handleDefaultMessageEvent(Event event) {
@@ -75,17 +92,6 @@ public class LineSpringBootCtl {
         messageConsumer.accept(response);
     }
 
-    private void system(String... args) {
-        ProcessBuilder processBuilder = new ProcessBuilder(args);
-        try {
-            Process start = processBuilder.start();
-            int i = start.waitFor();
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
 
     private static String createUri(String path) {
         return ServletUriComponentsBuilder.fromCurrentContextPath()
