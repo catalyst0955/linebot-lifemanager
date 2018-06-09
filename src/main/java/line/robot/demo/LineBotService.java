@@ -1,11 +1,11 @@
 package line.robot.demo;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
+@Component
 public class LineBotService {
     Map<String, String> valueMap;
 

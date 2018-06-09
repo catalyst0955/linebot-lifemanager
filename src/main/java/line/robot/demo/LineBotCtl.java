@@ -28,6 +28,7 @@ public class LineBotCtl {
 
     @Autowired
     private LineMessagingClient lineMessagingClient;
+
     @Autowired
     private LineBotService lineBotService;
 

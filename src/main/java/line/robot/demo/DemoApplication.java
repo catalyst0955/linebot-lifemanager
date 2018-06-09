@@ -1,24 +1,24 @@
 package line.robot.demo;
 
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.context.ConfigurableApplicationContext;
 
 
 @SpringBootApplication
 @LineMessageHandler
 public class DemoApplication {
-    @Autowired
-     static LineBotService lineBotService;
+
+
+
 
     public static void main(String[] args) {
 
+        ConfigurableApplicationContext applicationContext=SpringApplication.run(DemoApplication.class, args);
+        LineBotService lineBotService = applicationContext.getBean(LineBotService.class);
         lineBotService.setValue();
-        SpringApplication.run(DemoApplication.class, args);
+        System.out.println(lineBotService.valueMap);
 
     }
 
