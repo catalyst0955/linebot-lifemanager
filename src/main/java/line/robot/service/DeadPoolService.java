@@ -55,8 +55,7 @@ public class DeadPoolService {
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,
                     alpha));
             // 在指定坐标绘制水印文字
-            g.drawString(pressText, (width - (getLength(pressText) * fontSize))
-                     + x, (height - fontSize) + y);
+            g.drawString(pressText, 100, 100);
             g.dispose();
             ImageIO.write((BufferedImage) image, "JPEG", destImageFile.toFile());// 输出到文件流
         } catch (Exception e) {

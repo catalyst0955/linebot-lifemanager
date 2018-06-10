@@ -68,7 +68,6 @@ public class LineBotCtl {
             reply(event.getReplyToken(), new ImageMessage(createUri("/deadpool/"+destImageFile.getFileName()), createUri("/deadpool/"+destImageFile.getFileName())));
         } else {
             String fromServicePic = lineBotService.getPic(msg);
-            //String path2 = createUri("/static/img/96322.jpg");
             if (!fromServicePic.isEmpty()) {
                 reply(event.getReplyToken(), new ImageMessage(fromServicePic, fromServicePic));
             }
