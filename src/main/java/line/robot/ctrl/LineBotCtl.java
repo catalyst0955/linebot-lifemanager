@@ -22,6 +22,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.awt.*;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -54,7 +55,12 @@ public class LineBotCtl {
         } else if (msg.startsWith("deadpool")) {
             msg = msg.replaceFirst("deadpool","").trim();
             //String srcImageFile = createUri("/static/img/deadpool/1.jpg");
-            InputStream input = new ClassPathResource("/static/img/deadpool/1.jpg").getInputStream();
+            InputStream input = null;
+            try {
+                input = new ClassPathResource("/static/img/deadpool/1.jpg").getInputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Path destImageFile = createTempFile("jpg");
 
             deadPoolService.pressText(msg,input,destImageFile,"宋體", Font.BOLD,Color.BLACK,80,0,0,0.0F);
