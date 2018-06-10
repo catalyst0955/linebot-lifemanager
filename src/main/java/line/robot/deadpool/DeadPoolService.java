@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.file.Path;
 
 
 public class DeadPoolService {
@@ -24,8 +25,8 @@ public class DeadPoolService {
      * @param alpha 透明度：alpha 必须是范围 [0.0, 1.0] 之内（包含边界值）的一个浮点数字
      */
     public final static void pressText(String pressText,
-                                       String srcImageFile, String destImageFile, String fontName,
-                                       int fontStyle, Color color, int fontSize,int x,
+                                       String srcImageFile, Path destImageFile, String fontName,
+                                       int fontStyle, Color color, int fontSize, int x,
                                        int y, float alpha) {
         try {
             File img = new File(srcImageFile);
@@ -44,7 +45,7 @@ public class DeadPoolService {
             g.drawString(pressText, (width - (getLength(pressText) * fontSize))
                     / 2 + x, (height - fontSize) / 2 + y);
             g.dispose();
-            ImageIO.write((BufferedImage) image, "JPEG", new File(destImageFile));// 输出到文件流
+            ImageIO.write((BufferedImage) image, "JPEG", destImageFile.toFile());// 输出到文件流
         } catch (Exception e) {
             e.printStackTrace();
         }

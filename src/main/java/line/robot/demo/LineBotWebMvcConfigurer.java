@@ -11,6 +11,8 @@ public class LineBotWebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String deadPoolPath = DemoApplication.deadPoolPath.toUri().toASCIIString();
+        registry.addResourceHandler("/deadpool/**").addResourceLocations(deadPoolPath);
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/prop/**").addResourceLocations("classpath:/static/property/");

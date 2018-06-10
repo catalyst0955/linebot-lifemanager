@@ -13,6 +13,7 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
+import line.robot.deadpool.DeadPoolCtl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -32,15 +33,20 @@ public class LineBotCtl {
     @Autowired
     private LineBotService lineBotService;
 
+    @Autowired
+    private DeadPoolCtl deadPoolCtl;
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         String msg = event.getMessage().getText();
 
-        if(msg.equals("!指令")){
+        if (msg.equals("!指令")) {
             System.out.println(lineBotService.getKeySet());
             replyText(event.getReplyToken(), lineBotService.getKeySet());
-        }else {
+        } else if (msg.startsWith("deadpool")) {
+            String tempPic = deadPoolCtl.handleTextMessageEvent(event);
+            reply(event.getReplyToken(), new ImageMessage(tempPic, tempPic));
+        } else {
             String fromServicePic = lineBotService.getPic(msg);
             //String path2 = createUri("/static/img/96322.jpg");
             if (!fromServicePic.isEmpty()) {
@@ -49,8 +55,6 @@ public class LineBotCtl {
         }
 
     }
-
-
 
 
     @EventMapping
