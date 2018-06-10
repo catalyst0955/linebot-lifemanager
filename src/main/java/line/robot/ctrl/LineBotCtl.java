@@ -28,6 +28,7 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
@@ -57,13 +58,13 @@ public class LineBotCtl {
             //String srcImageFile = createUri("/static/img/deadpool/1.jpg");
             InputStream input = null;
             try {
-                input = new ClassPathResource("/static/img/deadpool/4.jpg").getInputStream();
+                input = new ClassPathResource("/static/img/deadpool/"+getRandom()+".jpg").getInputStream();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             Path destImageFile = createTempFile("jpg");
 
-            deadPoolService.pressText(msg,input,destImageFile, Font.BOLD,Color.green,80,0,0,1.0F);
+            deadPoolService.pressText(msg,input,destImageFile, Font.BOLD,Color.green,25,0,0,0.7F);
 
             reply(event.getReplyToken(), new ImageMessage(createUri("/deadpool/"+destImageFile.getFileName()), createUri("/deadpool/"+destImageFile.getFileName())));
         } else {
@@ -132,6 +133,12 @@ public class LineBotCtl {
         Path tempFile = DemoApplication.deadPoolPath.resolve(fileName);
         tempFile.toFile().deleteOnExit();
         return tempFile;
+    }
+
+    private static String getRandom(){
+        Random random = new Random();
+        int  i = random.nextInt(17)+1;
+        return String.valueOf(i);
     }
 
 }

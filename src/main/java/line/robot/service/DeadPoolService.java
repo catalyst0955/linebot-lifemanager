@@ -35,13 +35,12 @@ public class DeadPoolService {
             Font font;
             boolean isChn = pressText.getBytes().length == pressText.length()?false:true;
             if(isChn){
-                font = Font.createFont(Font.TRUETYPE_FONT,new ClassPathResource("/static/FONT/traditionalChn.ttf").getInputStream());
-                font.deriveFont(fontSize);
-
+//                font = Font.createFont(Font.TRUETYPE_FONT,new ClassPathResource("/static/FONT/traditionalChn.ttf").getInputStream());
+//                font.deriveFont(fontSize);
+               font = new Font("宋體", fontStyle, fontSize);
             }else{
                 font = new Font("DejaVu Sans", fontStyle, fontSize);
             }
-            System.out.println("***********************************************************************************" + pressText);
 
             Image src = ImageIO.read(input);
             int width = src.getWidth(null);
@@ -55,7 +54,8 @@ public class DeadPoolService {
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,
                     alpha));
             // 在指定坐标绘制水印文字
-            g.drawString(pressText, 100, 100);
+            g.drawString(pressText, (width - (getLength(pressText) * fontSize))
+                    / 2 + x, (height - fontSize)  + y);
             g.dispose();
             ImageIO.write((BufferedImage) image, "JPEG", destImageFile.toFile());// 输出到文件流
         } catch (Exception e) {
