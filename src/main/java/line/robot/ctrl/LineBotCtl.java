@@ -63,7 +63,7 @@ public class LineBotCtl {
             }
             Path destImageFile = createTempFile("jpg");
 
-            deadPoolService.pressText(msg,input,destImageFile, Font.BOLD,Color.green,80,0,0,0.0F);
+            deadPoolService.pressText(msg,input,destImageFile, Font.BOLD,Color.green,80,0,0,1.0F);
 
             reply(event.getReplyToken(), new ImageMessage(createUri("/deadpool/"+destImageFile.getFileName()), createUri("/deadpool/"+destImageFile.getFileName())));
         } else {

@@ -41,7 +41,7 @@ public class DeadPoolService {
             }else{
                 font = new Font("DejaVu Sans", fontStyle, fontSize);
             }
-
+            System.out.println("***********************************************************************************" + pressText);
 
             Image src = ImageIO.read(input);
             int width = src.getWidth(null);
