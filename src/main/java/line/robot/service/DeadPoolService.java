@@ -1,5 +1,6 @@
 package line.robot.service;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -32,7 +33,9 @@ public class DeadPoolService {
                                        int y, float alpha) {
         try {
             File img = new File(srcImageFile);
-            Image src = ImageIO.read(img);
+            System.out.println("***************IMG**********************:" + img.getName()+img.toString());
+            File img2 = new ClassPathResource("/static/img/deadpool/1.jpg").getFile();
+            Image src = ImageIO.read(img2);
             int width = src.getWidth(null);
             int height = src.getHeight(null);
             BufferedImage image = new BufferedImage(width, height,
