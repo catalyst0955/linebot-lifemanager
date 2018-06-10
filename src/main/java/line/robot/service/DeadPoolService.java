@@ -35,9 +35,7 @@ public class DeadPoolService {
             Font font;
             boolean isChn = pressText.getBytes().length == pressText.length()?false:true;
             if(isChn){
-//                font = Font.createFont(Font.TRUETYPE_FONT,new ClassPathResource("/static/FONT/traditionalChn.ttf").getInputStream());
-//                font.deriveFont(fontSize);
-               font = new Font("宋體", fontStyle, fontSize);
+                font = Font.createFont(Font.TRUETYPE_FONT,new ClassPathResource("/static/FONT/traditionalChn.ttf").getInputStream()).deriveFont(fontSize);
             }else{
                 font = new Font("DejaVu Sans", fontStyle, fontSize);
             }
