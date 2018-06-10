@@ -17,12 +17,13 @@ import line.robot.DemoApplication;
 import line.robot.service.DeadPoolService;
 import line.robot.service.LineBotService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.awt.*;
+import java.io.InputStream;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -52,13 +53,13 @@ public class LineBotCtl {
             replyText(event.getReplyToken(), lineBotService.getKeySet());
         } else if (msg.startsWith("deadpool")) {
             msg = msg.replaceFirst("deadpool","").trim();
-            String srcImageFile = createUri("/static/img/deadpool/1.jpg");
-            Path path = Paths.get(srcImageFile);
+            //String srcImageFile = createUri("/static/img/deadpool/1.jpg");
+            InputStream input = new ClassPathResource("/static/img/deadpool/1.jpg").getInputStream();
             Path destImageFile = createTempFile("jpg");
 
-            deadPoolService.pressText(msg,srcImageFile,path,"宋體", Font.BOLD,Color.BLACK,80,0,0,0.0F);
+            deadPoolService.pressText(msg,input,destImageFile,"宋體", Font.BOLD,Color.BLACK,80,0,0,0.0F);
 
-            reply(event.getReplyToken(), new ImageMessage(createUri("/deadpool/"+path.getFileName()), createUri("/deadpool/"+path.getFileName())));
+            reply(event.getReplyToken(), new ImageMessage(createUri("/deadpool/"+destImageFile.getFileName()), createUri("/deadpool/"+destImageFile.getFileName())));
         } else {
             String fromServicePic = lineBotService.getPic(msg);
             //String path2 = createUri("/static/img/96322.jpg");

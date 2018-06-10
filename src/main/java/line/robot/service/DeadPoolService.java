@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import java.nio.file.Path;
 
 @Service
@@ -28,13 +29,11 @@ public class DeadPoolService {
      * @param alpha 透明度：alpha 必须是范围 [0.0, 1.0] 之内（包含边界值）的一个浮点数字
      */
     public final static void pressText(String pressText,
-                                       String srcImageFile, Path destImageFile, String fontName,
+                                       InputStream input, Path destImageFile, String fontName,
                                        int fontStyle, Color color, int fontSize, int x,
                                        int y, float alpha) {
         try {
-            File img = new File(srcImageFile);
-            System.out.println("***************IMG**********************:" + img.getName()+img.toString());
-            Image src = ImageIO.read(img);
+            Image src = ImageIO.read(input);
             int width = src.getWidth(null);
             int height = src.getHeight(null);
             BufferedImage image = new BufferedImage(width, height,
