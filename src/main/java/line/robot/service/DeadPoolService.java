@@ -56,7 +56,7 @@ public class DeadPoolService {
                     alpha));
             // 在指定坐标绘制水印文字
             g.drawString(pressText, (width - (getLength(pressText) * fontSize))
-                    / 2 + x, (height - fontSize) / 2 + y);
+                     + x, (height - fontSize) + y);
             g.dispose();
             ImageIO.write((BufferedImage) image, "JPEG", destImageFile.toFile());// 输出到文件流
         } catch (Exception e) {

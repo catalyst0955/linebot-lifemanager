@@ -57,13 +57,13 @@ public class LineBotCtl {
             //String srcImageFile = createUri("/static/img/deadpool/1.jpg");
             InputStream input = null;
             try {
-                input = new ClassPathResource("/static/img/deadpool/1.jpg").getInputStream();
+                input = new ClassPathResource("/static/img/deadpool/4.jpg").getInputStream();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             Path destImageFile = createTempFile("jpg");
 
-            deadPoolService.pressText(msg,input,destImageFile, Font.BOLD,Color.BLACK,80,0,0,0.0F);
+            deadPoolService.pressText(msg,input,destImageFile, Font.BOLD,Color.green,80,0,0,0.0F);
 
             reply(event.getReplyToken(), new ImageMessage(createUri("/deadpool/"+destImageFile.getFileName()), createUri("/deadpool/"+destImageFile.getFileName())));
         } else {
