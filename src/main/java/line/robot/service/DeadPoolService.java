@@ -18,7 +18,7 @@ public class DeadPoolService {
     /**
      * 给图片添加文字水印
      * @param pressText 水印文字
-     * @param srcImageFile 源图像地址
+     * @param input 源图像地址
      * @param destImageFile 目标图像地址
      * @param fontName 水印的字体名称
      * @param fontStyle 水印的字体样式
@@ -33,6 +33,14 @@ public class DeadPoolService {
                                        int fontStyle, Color color, int fontSize, int x,
                                        int y, float alpha) {
         try {
+            GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            String[] envFontName = e.getAvailableFontFamilyNames();
+            for(int i = 0; i<envFontName.length ; i++)  {
+                System.out.println(envFontName[i]);
+            }
+
+
+
             Image src = ImageIO.read(input);
             int width = src.getWidth(null);
             int height = src.getHeight(null);

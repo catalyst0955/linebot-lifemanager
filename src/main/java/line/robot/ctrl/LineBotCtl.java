@@ -131,7 +131,7 @@ public class LineBotCtl {
     private static Path createTempFile(String ext) {
         String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
         Path tempFile = DemoApplication.deadPoolPath.resolve(fileName);
-      //  tempFile.toFile().deleteOnExit();
+        tempFile.toFile().deleteOnExit();
         return tempFile;
     }
 
