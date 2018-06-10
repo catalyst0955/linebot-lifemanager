@@ -1,12 +1,14 @@
 package line.robot.deadpool;
 
+import org.springframework.stereotype.Service;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Path;
 
-
+@Service
 public class DeadPoolService {
 
 

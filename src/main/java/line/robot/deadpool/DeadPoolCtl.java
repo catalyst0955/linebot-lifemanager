@@ -2,17 +2,19 @@ package line.robot.deadpool;
 
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
-import com.linecorp.bot.model.message.ImageMessage;
 import line.robot.demo.DemoApplication;
 import line.robot.demo.LineBotCtl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.awt.*;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 
 @Component
 public class DeadPoolCtl {
@@ -22,6 +24,8 @@ public class DeadPoolCtl {
 
     @Autowired
     LineBotCtl lineBotCtl;
+
+    @Bean
     public String handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         String msg = event.getMessage().getText();
         msg = msg.replaceFirst("deadpool","").trim();
