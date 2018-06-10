@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.awt.*;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -52,11 +53,12 @@ public class LineBotCtl {
         } else if (msg.startsWith("deadpool")) {
             msg = msg.replaceFirst("deadpool","").trim();
             String srcImageFile = createUri("/static/img/deadpool/1.jpg");
+            Path path = Paths.get(srcImageFile);
             Path destImageFile = createTempFile("jpg");
 
-            deadPoolService.pressText(msg,srcImageFile,destImageFile,"宋體", Font.BOLD,Color.BLACK,80,0,0,0.0F);
+            deadPoolService.pressText(msg,srcImageFile,path,"宋體", Font.BOLD,Color.BLACK,80,0,0,0.0F);
 
-            reply(event.getReplyToken(), new ImageMessage(createUri("/deadpool/"+destImageFile.getFileName()), createUri("/deadpool/"+destImageFile.getFileName())));
+            reply(event.getReplyToken(), new ImageMessage(createUri("/deadpool/"+path.getFileName()), createUri("/deadpool/"+path.getFileName())));
         } else {
             String fromServicePic = lineBotService.getPic(msg);
             //String path2 = createUri("/static/img/96322.jpg");
@@ -122,7 +124,7 @@ public class LineBotCtl {
     private static Path createTempFile(String ext) {
         String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
         Path tempFile = DemoApplication.deadPoolPath.resolve(fileName);
-        tempFile.toFile().deleteOnExit();
+      //  tempFile.toFile().deleteOnExit();
         return tempFile;
     }
 

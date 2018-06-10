@@ -34,8 +34,7 @@ public class DeadPoolService {
         try {
             File img = new File(srcImageFile);
             System.out.println("***************IMG**********************:" + img.getName()+img.toString());
-            File img2 = new ClassPathResource("/static/img/deadpool/1.jpg").getFile();
-            Image src = ImageIO.read(img2);
+            Image src = ImageIO.read(img);
             int width = src.getWidth(null);
             int height = src.getHeight(null);
             BufferedImage image = new BufferedImage(width, height,
