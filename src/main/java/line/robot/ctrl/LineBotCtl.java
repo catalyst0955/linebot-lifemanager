@@ -53,9 +53,10 @@ public class LineBotCtl {
             msg = msg.replaceFirst("deadpool","").trim();
             String srcImageFile = createUri("/static/img/deadpool/1.jpg");
             Path destImageFile = createTempFile("jpg");
+
             deadPoolService.pressText(msg,srcImageFile,destImageFile,"宋體", Font.BOLD,Color.BLACK,80,0,0,0.0F);
 
-            reply(event.getReplyToken(), new ImageMessage(destImageFile.toString(), destImageFile.toString()));
+            reply(event.getReplyToken(), new ImageMessage(createUri("/deadpool/"+destImageFile.getFileName()), createUri("/deadpool/"+destImageFile.getFileName())));
         } else {
             String fromServicePic = lineBotService.getPic(msg);
             //String path2 = createUri("/static/img/96322.jpg");
