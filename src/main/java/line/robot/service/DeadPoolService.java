@@ -20,7 +20,6 @@ public class DeadPoolService {
      * @param pressText 水印文字
      * @param input 源图像地址
      * @param destImageFile 目标图像地址
-     * @param fontName 水印的字体名称
      * @param fontStyle 水印的字体样式
      * @param color 水印的字体颜色
      * @param fontSize 水印的字体大小
@@ -29,16 +28,19 @@ public class DeadPoolService {
      * @param alpha 透明度：alpha 必须是范围 [0.0, 1.0] 之内（包含边界值）的一个浮点数字
      */
     public final static void pressText(String pressText,
-                                       InputStream input, Path destImageFile, String fontName,
+                                       InputStream input, Path destImageFile,
                                        int fontStyle, Color color, int fontSize, int x,
                                        int y, float alpha) {
         try {
-            GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            String[] envFontName = e.getAvailableFontFamilyNames();
-            for(int i = 0; i<envFontName.length ; i++)  {
-                System.out.println(envFontName[i]);
-            }
+            Font font;
+            boolean isChn = pressText.getBytes().length == pressText.length()?false:true;
+            if(isChn){
+                font = Font.createFont(Font.TRUETYPE_FONT,new ClassPathResource("/static/FONT/traditionalChn.ttf").getInputStream());
+                font.deriveFont(fontSize);
 
+            }else{
+                font = new Font("DejaVu Sans", fontStyle, fontSize);
+            }
 
 
             Image src = ImageIO.read(input);
@@ -49,7 +51,7 @@ public class DeadPoolService {
             Graphics2D g = image.createGraphics();
             g.drawImage(src, 0, 0, width, height, null);
             g.setColor(color);
-            g.setFont(new Font(fontName, fontStyle, fontSize));
+            g.setFont(font);
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,
                     alpha));
             // 在指定坐标绘制水印文字
