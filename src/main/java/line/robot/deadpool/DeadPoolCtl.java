@@ -6,6 +6,7 @@ import com.linecorp.bot.model.message.ImageMessage;
 import line.robot.demo.DemoApplication;
 import line.robot.demo.LineBotCtl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.awt.*;
@@ -13,6 +14,7 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Component
 public class DeadPoolCtl {
 
     @Autowired
