@@ -1,4 +1,4 @@
-package line.robot.demo;
+package line.robot.ctrl;
 
 
 import com.linecorp.bot.client.LineMessagingClient;
@@ -13,13 +13,19 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import line.robot.deadpool.DeadPoolCtl;
+import line.robot.DemoApplication;
+import line.robot.service.DeadPoolService;
+import line.robot.service.LineBotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.awt.*;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
@@ -34,7 +40,7 @@ public class LineBotCtl {
     private LineBotService lineBotService;
 
     @Autowired
-    private DeadPoolCtl deadPoolCtl;
+    DeadPoolService deadPoolService;
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
@@ -44,8 +50,12 @@ public class LineBotCtl {
             System.out.println(lineBotService.getKeySet());
             replyText(event.getReplyToken(), lineBotService.getKeySet());
         } else if (msg.startsWith("deadpool")) {
-            String tempPic = deadPoolCtl.handleTextMessageEvent(event);
-            reply(event.getReplyToken(), new ImageMessage(tempPic, tempPic));
+            msg = msg.replaceFirst("deadpool","").trim();
+            String srcImageFile = createUri("/static/img/deadpool/1.jpg");
+            Path destImageFile = createTempFile("jpg");
+            deadPoolService.pressText(msg,srcImageFile,destImageFile,"宋體", Font.BOLD,Color.BLACK,80,0,0,0.0F);
+
+            reply(event.getReplyToken(), new ImageMessage(destImageFile.toString(), destImageFile.toString()));
         } else {
             String fromServicePic = lineBotService.getPic(msg);
             //String path2 = createUri("/static/img/96322.jpg");
@@ -106,6 +116,13 @@ public class LineBotCtl {
             message = message.substring(0, 1000 - 2) + "……";
         }
         this.reply(replyToken, new TextMessage(message));
+    }
+
+    private static Path createTempFile(String ext) {
+        String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
+        Path tempFile = DemoApplication.deadPoolPath.resolve(fileName);
+        tempFile.toFile().deleteOnExit();
+        return tempFile;
     }
 
 }

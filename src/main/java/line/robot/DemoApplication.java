@@ -1,6 +1,7 @@
-package line.robot.demo;
+package line.robot;
 
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
+import line.robot.service.LineBotService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

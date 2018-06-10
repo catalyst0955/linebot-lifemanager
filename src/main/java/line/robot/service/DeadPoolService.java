@@ -1,4 +1,4 @@
-package line.robot.deadpool;
+package line.robot.service;
 
 import org.springframework.stereotype.Service;
 

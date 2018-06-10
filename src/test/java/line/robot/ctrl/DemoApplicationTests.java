@@ -1,4 +1,4 @@
-package line.robot.demo;
+package line.robot.ctrl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
