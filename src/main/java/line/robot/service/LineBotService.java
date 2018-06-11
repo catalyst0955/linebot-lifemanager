@@ -19,31 +19,23 @@ public class LineBotService {
     @Autowired
     DataRepository dataRepository;
 
-    Map<String, String> valueMap;
-    Properties props;
-
-    public void setValue () {
-        Map<String, String> picMap = new HashMap<>();
-        this.valueMap = picMap;
-
-        Properties prop = new Properties();
-        try{
-            prop.load(new InputStreamReader(new ClassPathResource("/static/property/img.properties").getInputStream(),"UTF-8") );
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        this.props = prop;
-        for(Object key : props.keySet()){
-            Object value = props.get(key);
-            valueMap.put(String.valueOf(key),String.valueOf(value));
-        }
-
-    }
 
     public String addValue(String key,String value,String userId){
         String result = "";
         if(value.startsWith("https://i.imgur.com")) {
-            props.setProperty(key, value);
+            LineBotModal modal = new LineBotModal();
+            modal.setDataValue(value);
+            modal.setDataKey(key);
+            modal.setUserId(userId);
+            try {
+                dataRepository.saveAndFlush(modal);
+            }catch(Exception e){
+                e.printStackTrace();
+                result = "資料庫存取失敗，請稍後再試";
+            }
+
+        }else{
+            result = "圖片資料格式不符，請取得Imgur的正確網址";
         }
         return result;
     }
@@ -64,8 +56,12 @@ public class LineBotService {
 
     public String getPic(String key) {
         String result = "";
-        LineBotModal modal = dataRepository.getOne(key);
-        result = modal.getDataValue();
+        try {
+            LineBotModal modal = dataRepository.getOne(key);
+            result = modal.getDataValue();
+        }catch(Exception e){
+
+        }
         return result;
     }
 

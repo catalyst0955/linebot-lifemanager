@@ -21,11 +21,6 @@ public class DemoApplication {
         deadPoolPath = Files.createTempDirectory("line-bot");
         ConfigurableApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
         LineBotService lineBotService = applicationContext.getBean(LineBotService.class);
-
-
-
-        lineBotService.setValue();
-
     }
 
 

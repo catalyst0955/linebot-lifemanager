@@ -57,8 +57,7 @@ public class LineBotCtl {
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         String msg = event.getMessage().getText();
-        System.out.println("USERID :　"+event.getSource().getUserId());
-        System.out.println("SENDERID : " + event.getSource().getSenderId());
+
         if (msg.equals("!指令")) {
            String keyList = lineBotService.replyKeyList(event);
             replyText(event.getReplyToken(), keyList);
@@ -86,7 +85,7 @@ public class LineBotCtl {
             }
 
         }
-        else {
+        else if(msg.length()<=10){
             String fromServicePic = lineBotService.getPic(msg);
             if (!fromServicePic.isEmpty()) {
                 reply(event.getReplyToken(), new ImageMessage(fromServicePic, fromServicePic));
