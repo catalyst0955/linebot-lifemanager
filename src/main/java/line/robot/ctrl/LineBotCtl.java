@@ -82,7 +82,7 @@ public class LineBotCtl {
             if(strList.length!=3){
                 replyText(event.getReplyToken(), "指令格式錯誤，請再輸入一次(-add 指令 Imgur圖片網址)");
             }else{
-                replyText(event.getReplyToken(),lineBotService.addValue(strList[1],strList[2]));
+                replyText(event.getReplyToken(),lineBotService.addValue(strList[1],strList[2],event.getSource().getUserId()));
             }
 
         }
