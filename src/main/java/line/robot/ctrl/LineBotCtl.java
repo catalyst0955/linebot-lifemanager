@@ -85,7 +85,7 @@ public class LineBotCtl {
             }
 
         }
-        else if(msg.length()<=10){
+        else {
             String fromServicePic = lineBotService.getPic(msg);
             if (!fromServicePic.isEmpty()) {
                 reply(event.getReplyToken(), new ImageMessage(fromServicePic, fromServicePic));
