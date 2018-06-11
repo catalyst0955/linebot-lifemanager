@@ -15,7 +15,6 @@ import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import line.robot.DemoApplication;
 import line.robot.config.DataRepository;
-import line.robot.model.LineBotModal;
 import line.robot.service.DeadPoolService;
 import line.robot.service.LineBotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,7 @@ import javax.sql.DataSource;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -57,6 +57,11 @@ public class LineBotCtl {
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         String msg = event.getMessage().getText();
+        try {
+            msg = new String(msg.getBytes("UTF-8"),"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         if (msg.equals("!指令")) {
            String keyList = lineBotService.replyKeyList(event);
