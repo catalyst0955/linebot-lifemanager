@@ -14,6 +14,8 @@ import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import line.robot.DemoApplication;
+import line.robot.config.DataRepository;
+import line.robot.model.LineBotModal;
 import line.robot.service.DeadPoolService;
 import line.robot.service.LineBotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.sql.DataSource;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,15 +47,22 @@ public class LineBotCtl {
     private LineBotService lineBotService;
 
     @Autowired
-    DeadPoolService deadPoolService;
+    private DeadPoolService deadPoolService;
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private DataRepository dataRepository;
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         String msg = event.getMessage().getText();
-
+        System.out.println("USERID :　"+event.getSource().getUserId());
+        System.out.println("SENDERID : " + event.getSource().getSenderId());
         if (msg.equals("!指令")) {
-            System.out.println(lineBotService.getKeySet());
-            replyText(event.getReplyToken(), lineBotService.getKeySet());
+           String keyList = lineBotService.replyKeyList(event);
+            replyText(event.getReplyToken(), keyList);
+
         } else if (msg.startsWith("deadpool")) {
             msg = msg.replaceFirst("deadpool","").trim();
             //String srcImageFile = createUri("/static/img/deadpool/1.jpg");
@@ -67,7 +77,16 @@ public class LineBotCtl {
             deadPoolService.pressText(msg,input,destImageFile, Font.TRUETYPE_FONT,Color.YELLOW,20,0,10,0.9F);
 
             reply(event.getReplyToken(), new ImageMessage(createUri("/deadpool/"+destImageFile.getFileName()), createUri("/deadpool/"+destImageFile.getFileName())));
-        } else {
+        }else if(msg.startsWith("-add")){
+            String[] strList = msg.trim().split(" ");
+            if(strList.length!=3){
+                replyText(event.getReplyToken(), "指令格式錯誤，請再輸入一次(-add 指令 Imgur圖片網址)");
+            }else{
+                replyText(event.getReplyToken(),lineBotService.addValue(strList[1],strList[2]));
+            }
+
+        }
+        else {
             String fromServicePic = lineBotService.getPic(msg);
             if (!fromServicePic.isEmpty()) {
                 reply(event.getReplyToken(), new ImageMessage(fromServicePic, fromServicePic));

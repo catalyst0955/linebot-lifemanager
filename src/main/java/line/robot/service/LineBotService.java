@@ -1,32 +1,29 @@
 package line.robot.service;
 
+import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.message.TextMessageContent;
+import line.robot.config.DataRepository;
+import line.robot.model.LineBotModal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
+
 
 @Component
 public class LineBotService {
+
+    @Autowired
+    DataRepository dataRepository;
+
     Map<String, String> valueMap;
+    Properties props;
 
     public void setValue () {
         Map<String, String> picMap = new HashMap<>();
-//        picMap.put("南非召喚", "https://i.imgur.com/BsOco1k.gif");
-//        picMap.put("羈押", "https://i.imgur.com/ac0BUWS.jpg");
-//        picMap.put("錢包君1", "https://i.imgur.com/WtNrmCi.jpg");
-//        picMap.put("賣萌", "https://i.imgur.com/x17YqKi.jpg");
-//        picMap.put("裝傻", "https://i.imgur.com/cy1Gdq0.jpg");
-//        picMap.put("什麼都沒有", "https://i.imgur.com/mCRGPgW.jpg");
-//        picMap.put("萌新三連", "https://i.imgur.com/SAPBVzy.jpg");
-//        picMap.put("萌新", "https://i.imgur.com/XiPQKCR.jpg");
-//        picMap.put("絕望", "https://i.imgur.com/M9h7HWV.jpg");
-//        picMap.put("牛逼", "https://i.imgur.com/NBRRTfl.jpg");
-//        picMap.put("鹹魚", "https://i.imgur.com/uUMmC5Q.jpg");
-//        picMap.put("燒", "https://i.imgur.com/5LbIIRv.jpg");
-//        picMap.put("大佬", "https://i.imgur.com/Ci5qJdB.jpg");
         this.valueMap = picMap;
 
         Properties prop = new Properties();
@@ -35,25 +32,42 @@ public class LineBotService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for(Object key : prop.keySet()){
-            Object value = prop.get(key);
+        this.props = prop;
+        for(Object key : props.keySet()){
+            Object value = props.get(key);
             valueMap.put(String.valueOf(key),String.valueOf(value));
-            System.out.println("Keys:" + key.toString() + "     value:" + value.toString());
         }
 
+    }
+
+    public String addValue(String key,String value,String userId){
+        String result = "";
+        if(value.startsWith("https://i.imgur.com")) {
+            props.setProperty(key, value);
+        }
+        return result;
+    }
+
+    public String replyKeyList(MessageEvent<TextMessageContent> event){
+
+        List<LineBotModal> modalList = dataRepository.findAll();
+        StringBuilder sb  = new StringBuilder();
+        sb.append("目前可以用的指令為: ");
+        for(LineBotModal modal:modalList){
+            sb.append(modal.getDataKey()).append(",").append(" ");
+        }
+        String keyList = sb.toString().substring(0,sb.length()-2);
+        System.out.println(keyList);
+        return keyList;
     }
 
 
     public String getPic(String key) {
         String result = "";
-        if(valueMap.containsKey(key)){
-            result = valueMap.get(key);
-        }
+        LineBotModal modal = dataRepository.getOne(key);
+        result = modal.getDataValue();
         return result;
     }
 
-    public String getKeySet(){
-        return valueMap.keySet().toString();
-    }
 
 }
