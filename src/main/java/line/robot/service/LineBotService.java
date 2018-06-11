@@ -5,9 +5,12 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import line.robot.config.DataRepository;
 import line.robot.model.LineBotModal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import javax.sql.DataSource;
+import java.io.InputStreamReader;
+import java.util.*;
 
 
 @Component
@@ -23,7 +26,7 @@ public class LineBotService {
             try {
                 LineBotModal modal = new LineBotModal();
                 modal.setDataValue(value);
-                modal.setDataKey(key);
+                modal.setDataKey(new String(key.getBytes("UTF-8"), "UTF-8"));
                 modal.setUserId(userId);
                 dataRepository.saveAndFlush(modal);
             } catch (Exception e) {
@@ -54,9 +57,11 @@ public class LineBotService {
     public String getPic(String key) {
         String result = "";
         try {
-            LineBotModal modal = dataRepository.getOne(key);
+            LineBotModal modal = dataRepository.getOne(new String(key.getBytes("UTF-8"), "UTF-8"));
             result = modal.getDataValue();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+
+        }
         System.out.println(result);
         return result;
     }

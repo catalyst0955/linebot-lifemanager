@@ -57,11 +57,7 @@ public class LineBotCtl {
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         String msg = event.getMessage().getText();
-        try {
-            msg = new String(msg.getBytes("UTF-8"),"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+
 
         if (msg.equals("!指令")) {
            String keyList = lineBotService.replyKeyList(event);
