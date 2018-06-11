@@ -25,8 +25,11 @@ public class LineBotService {
         if (value.startsWith("https://i.imgur.com")) {
             try {
                 LineBotModal modal = new LineBotModal();
+
+                key = new String(key.getBytes("UTF-8"), "UTF-8");
+
                 modal.setDataValue(value);
-                modal.setDataKey(new String(key.getBytes("UTF-8"), "UTF-8"));
+                modal.setDataKey(key);
                 modal.setUserId(userId);
                 dataRepository.saveAndFlush(modal);
             } catch (Exception e) {
@@ -57,7 +60,10 @@ public class LineBotService {
     public String getPic(String key) {
         String result = "";
         try {
-            LineBotModal modal = dataRepository.getOne(new String(key.getBytes("UTF-8"), "UTF-8"));
+            key = new String(key.getBytes("UTF-8"), "UTF-8");
+            System.out.println(key);
+            LineBotModal modal = dataRepository.getOne(key);
+            System.out.println("modalvalue:" + modal.getDataValue());
             result = modal.getDataValue();
         } catch (Exception e) {
 
