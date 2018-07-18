@@ -36,20 +36,6 @@ public class DemoCtl {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addCommand(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(request.getParameterNames());
-        for (String keys : request.getParameterMap().keySet()) {
-            String value = request.getParameterMap().get(keys)[0];
-            try {
-                keys = new String(keys.getBytes("UTF-8"),"UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            LineBotModal modal = new LineBotModal();
-            modal.setDataKey(keys);
-            modal.setDataValue(request.getParameterMap().get(keys)[0]);
-            dataRepository.saveAndFlush(modal);
-        }
-
 
         return "index";
 
