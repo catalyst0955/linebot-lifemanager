@@ -26,6 +26,9 @@ public class LineBotModal {
     @Column
     private String UserId;
 
+    @Column
+    private String CreateTime;
+
     public String getPayName() {
         return payName;
     }
@@ -72,5 +75,13 @@ public class LineBotModal {
 
     public void setUserId(String userId) {
         UserId = userId;
+    }
+
+    public String getCreateTime() {
+        return CreateTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        CreateTime = createTime;
     }
 }

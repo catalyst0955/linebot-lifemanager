@@ -5,6 +5,10 @@ import line.robot.model.LineBotModal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 @Component
 public class LineBotService {
@@ -19,6 +23,8 @@ public class LineBotService {
             result = "系統錯誤";
         }else{
             LineBotModal modal = new LineBotModal();
+            DateFormat fmt = new SimpleDateFormat("yyyy/mm/dd");
+            String date = fmt.format(new Date());
             int length = strList.length;
             switch (length){
                 case 6:
@@ -31,6 +37,7 @@ public class LineBotService {
                     modal.setPayName(strList[1]);
                     modal.setPayValue(strList[2]);
                     modal.setUserId(userId);
+                    modal.setCreateTime(date);
                     break;
                 case 2:
                 case 1:
