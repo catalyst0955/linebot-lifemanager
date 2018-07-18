@@ -15,10 +15,8 @@ import java.nio.file.Path;
 @LineMessageHandler
 public class DemoApplication {
 
-    static final String PATH = "https://triple-bon.herokuapp.com";
-    public static Path deadPoolPath;
+    static final String PATH = "https://life-manager-0520.herokuapp.com";
     public static void main(String[] args) throws IOException {
-        deadPoolPath = Files.createTempDirectory("line-bot");
         ConfigurableApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
         LineBotService lineBotService = applicationContext.getBean(LineBotService.class);
     }

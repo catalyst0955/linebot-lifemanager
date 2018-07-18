@@ -1,16 +1,9 @@
 package line.robot.service;
 
-import com.linecorp.bot.model.event.MessageEvent;
-import com.linecorp.bot.model.event.message.TextMessageContent;
 import line.robot.config.DataRepository;
 import line.robot.model.LineBotModal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-
-import javax.sql.DataSource;
-import java.io.InputStreamReader;
-import java.util.*;
 
 
 @Component
@@ -20,57 +13,42 @@ public class LineBotService {
     DataRepository dataRepository;
 
 
-    public String addValue(String key, String value, String userId) {
+    public String addValue(String[] strList,String userId) {
         String result = "";
-        if (value.startsWith("https://i.imgur.com")) {
-            try {
-                LineBotModal modal = new LineBotModal();
-
-                key = new String(key.getBytes("UTF-8"), "UTF-8");
-
-                modal.setDataValue(value);
-                modal.setDataKey(key);
-                modal.setUserId(userId);
-                dataRepository.saveAndFlush(modal);
-            } catch (Exception e) {
-                e.printStackTrace();
-                result = "資料庫存取失敗，請稍後再試";
+        if(!strList[0].equals("記帳")){
+            result = "系統錯誤";
+        }else{
+            LineBotModal modal = new LineBotModal();
+            int length = strList.length;
+            switch (length){
+                case 6:
+                    modal.setFirstClassify(strList[5]);
+                case 5:
+                    modal.setSecondClassify(strList[4]);
+                case 4:
+                    modal.setCommand(strList[3]);
+                case 3:
+                    modal.setPayName(strList[1]);
+                    modal.setPayValue(strList[2]);
+                    modal.setUserId(userId);
+                    break;
+                case 2:
+                case 1:
+                    result = "輸入格式錯誤，請至少輸入{記帳 名稱 金額}";
+                    break;
             }
-
-        } else {
-            result = "圖片資料格式不符，請取得Imgur的正確網址";
+            dataRepository.saveAndFlush(modal);
+            result = "記帳完成";
         }
         return result;
     }
 
-    public String replyKeyList(MessageEvent<TextMessageContent> event) {
-
-        List<LineBotModal> modalList = dataRepository.findAll();
-        StringBuilder sb = new StringBuilder();
-        sb.append("目前可以用的指令為: ");
-        for (LineBotModal modal : modalList) {
-            sb.append(modal.getDataKey()).append(",").append(" ");
-        }
-        String keyList = sb.toString().substring(0, sb.length() - 2);
-        System.out.println(keyList);
-        return keyList;
+    public String howToUse(){
+        return "使用格式 {記帳 名稱 金額 備註(選) 粗分類(選) 細分類(選)}";
     }
 
 
-    public String getPic(String key) {
-        String result = "";
-        try {
-            key = new String(key.getBytes("UTF-8"), "UTF-8");
-            System.out.println(key);
-            LineBotModal modal = dataRepository.getOne(key);
-            System.out.println("modalvalue:" + modal.getDataValue());
-            result = modal.getDataValue();
-        } catch (Exception e) {
 
-        }
-        System.out.println(result);
-        return result;
-    }
 
 
 }
