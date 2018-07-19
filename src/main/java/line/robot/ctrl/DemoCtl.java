@@ -28,9 +28,9 @@ public class DemoCtl {
         return "index";
     }
 
-    @RequestMapping("/start")
-    public String test2() {
-        return "folder/index2";
+    @RequestMapping("/view")
+    public String view() {
+        return "report";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -39,6 +39,8 @@ public class DemoCtl {
         return "index";
 
     }
+
+
 
 //    @RequestMapping(value = "/post", method = RequestMethod.POST)
 //    public ResponseEntity receivePostAction(HttpServletRequest request, HttpServletResponse response) {

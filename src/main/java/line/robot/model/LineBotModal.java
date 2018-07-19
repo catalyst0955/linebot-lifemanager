@@ -8,7 +8,10 @@ import javax.persistence.*;
 public class LineBotModal {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String serial;
+
+    @Column
     private String payName;
 
     @Column(nullable = false)
@@ -83,5 +86,13 @@ public class LineBotModal {
 
     public void setCreateTime(String createTime) {
         CreateTime = createTime;
+    }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
     }
 }

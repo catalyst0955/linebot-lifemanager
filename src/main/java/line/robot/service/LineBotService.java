@@ -19,12 +19,18 @@ public class LineBotService {
 
     public String addValue(String[] strList,String userId) {
         String result = "";
+
         if(!strList[0].equals("記帳")){
             result = "系統錯誤";
         }else{
             LineBotModal modal = new LineBotModal();
-            DateFormat fmt = new SimpleDateFormat("yyyy/mm/dd");
+            DateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
             String date = fmt.format(new Date());
+            if(userId == "Ufd45c49f9bd95094e8a01c4d11baefde"){
+                userId="Alexander";
+            }else if(userId == "U8698476c2181ff370b4a56fe6b5ac3cf"){
+                userId = "Dory";
+            }
             int length = strList.length;
             switch (length){
                 case 6:
