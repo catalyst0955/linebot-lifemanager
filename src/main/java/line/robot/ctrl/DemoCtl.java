@@ -25,12 +25,12 @@ public class DemoCtl {
 
     @RequestMapping("/init")
     public String test() {
-        return "index";
+        return "index2";
     }
 
-    @RequestMapping("/view")
+    @RequestMapping(value = "/view",method = RequestMethod.GET)
     public String view() {
-        return "report";
+        return "index";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
