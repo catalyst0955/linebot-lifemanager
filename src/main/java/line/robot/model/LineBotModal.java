@@ -9,7 +9,7 @@ public class LineBotModal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String serial;
+    private Integer serial;
 
     @Column
     private String payName;
@@ -88,11 +88,11 @@ public class LineBotModal {
         CreateTime = createTime;
     }
 
-    public String getSerial() {
+    public Integer getSerial() {
         return serial;
     }
 
-    public void setSerial(String serial) {
+    public void setSerial(Integer serial) {
         this.serial = serial;
     }
 }
