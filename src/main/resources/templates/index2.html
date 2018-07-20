@@ -4,9 +4,10 @@
     <link rel="stylesheet" type="text/css" href="../static/DataTables-1.10.16/css/dataTables.bootstrap4.min.css"/>
     <link rel="stylesheet" type="text/css" href="../static/Buttons-1.5.1/css/buttons.bootstrap4.min.css"/>
     <link rel="stylesheet" type="text/css" href="../static/air-datepicker/css/datepicker.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/modal.css">
 
     <script src="../static/jquery/jquery-3.3.1.min.js"></script>
-    <script src="../static/jquery/jquery.min.js"></script>
+    <script src="../static/bootstrap/js/popper.min.js"></script>
     <script src="../static/bootstrap/js/bootstrap.min.js"></script>
 
     <script type="text/javascript" src="../static/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
@@ -16,14 +17,17 @@
     <script type="text/javascript" src="../static/Buttons-1.5.1/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="../static/air-datepicker/js/datepicker.min.js"></script>
     <script type="text/javascript" src="../static/air-datepicker/js/i18n/datepicker.zh-TW.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="../static/JSZip-2.5.0/jszip.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="../static/js/modal.js" charset="UTF-8"></script>
 
-
+    <title>老公就是神的記帳網站!</title>
 </head>
 
 <body>
+
 <section id="searchBlock">
     <div class="container-fluid">
-        <div class="form-group row">
+        <div class="form-group row mt-3">
             <label class="col-2 col-form-label">查詢日期：</label>
             <div class="col-5">
                 <input type="text" class="form-control" id="startDate" placeholder="開始">
@@ -40,48 +44,58 @@
         <div class="form-group row">
             <label class="col-2 col-form-label">名稱：</label>
             <div class="col-5">
-                <input type="text" class="form-control" id="payName" placeholder="開始">
+                <input type="text" class="form-control" id="payName">
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-2 col-form-label">金額：</label>
             <div class="col-5">
-                <input type="text" class="form-control" id="payValue" placeholder="開始">
+                <input type="text" class="form-control" id="payValue">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2 col-form-label">備註：</label>
+            <div class="col-5">
+                <input type="text" class="form-control" id="command">
             </div>
         </div>
         <div class="form-group row">
             <label class="col-2 col-form-label">初分類：</label>
             <div class="col-5">
-                <input type="text" class="form-control" id="firstClassify" placeholder="開始">
+                <input type="text" class="form-control" id="firstClassify">
             </div>
         </div>
         <div class="form-group row">
             <label class="col-2 col-form-label">細分類：</label>
             <div class="col-5">
-                <input type="text" class="form-control" id="secondClassify" placeholder="開始">
+                <input type="text" class="form-control" id="secondClassify">
             </div>
         </div>
         <div class="form-group row">
             <label class="col-2 col-form-label">付錢人：</label>
             <div class="col-5">
-                <input type="text" class="form-control" id="userId" placeholder="開始">
+                <!--<input type="text" class="form-control" id="userId" value="" placeholder="">-->
+                <select class="form-control py-0" id="userId">
+                    <option value="Alexander" selected>老公</option>
+                    <option value="Dory">老婆</option>
+                </select>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-2 col-form-label">時間：</label>
             <div class="col-5">
-                <input type="text" class="form-control" id="createTime" placeholder="開始">
+                <input type="text" class="form-control" id="createTime">
             </div>
         </div>
         <div class="text-right">
-            <button type="button" class="btn btn-outline-primary" onclick="add()">新增</button>
+            <button type="button" class="btn btn-outline-primary" onclick="addRow()">新增</button>
         </div>
         <hr>
         <div class="form-group row">
             <label class="col-2 col-form-label">序號</label>
             <div class="col-5">
-                <input type="text" class="form-control" id="serial" placeholder="開始">
+                <input type="text" class="form-control" id="serial" placeholder="">
             </div>
         </div>
         <div class="text-right">
@@ -95,20 +109,45 @@
         </table>
     </div>
 </section>
+
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="messageModalTitle" style="display:none;"></h5>
+                <button type="button" id="modalCloseButton" class="model-close-circle-btn" data-dismiss="modal" aria-label="Close" onclick="Modal.close('cancel')">
+                    <span aria-hidden="true" class="hidden">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5 id="messageModalContent" style="word-break:break-all;"></h5>
+                <div id="messageModalHtml" style="word-break:break-all;"></div>
+            </div>
+            <div class="modal-footer text-center" style="border-top:0px;">
+                <button id="modalCancelButton" style="display:none;" type="button" class="btn btn-kgi-secondary col" data-dismiss="modal" onclick="Modal.close('cancel')">取消</button>
+                <button id="modalOKButton" type="button" class="btn btn-kgi-primary col" data-dismiss="modal" onclick="Modal.close('ok')">確認</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input style="display:none;" id="modalResult" type="text">
+
 <script>
     var table;
     //RESTful api 位置
-    var root = '${rootPath}';
-    var apiUrl = root+'/dataApi';
+    var apiUrl = '/dataApi';
 
     $(document).ready(function () {
-        $('#startDate,#endDate').datepicker({
+        console.log(apiUrl);
+        $('#startDate,#endDate,#createTime').datepicker({
             language: 'zh-TW'
         });
 
         var d = new Date();
         $('#startDate').datepicker().data('datepicker').selectDate(new Date(d.getFullYear(), d.getMonth(), '1'));
         $('#endDate').datepicker().data('datepicker').selectDate(d);
+        $('#createTime').datepicker().data('datepicker').selectDate(d);
         initDataTable();
     });
 
@@ -123,33 +162,36 @@
                 data: getSearchData
             },
             columns: [{
-                data: 'Serial',
+                data: 'serial',
                 title: '序號'
             }, {
-                data: 'CaseNo',
-                title: '申請案件編號'
+                data: 'payName',
+                title: '支出名稱'
             }, {
-                data: 'UTime',
-                title: '進件日期'
+                data: 'payValue',
+                title: '支出金額'
             }, {
-                data: 'CaseNoWeb',
-                title: 'APS案件編號'
+                data: 'command',
+                title: '備註'
             }, {
-                data: 'GMCardNo',
-                title: '現金卡系統案件編號'
+                data: 'firstClassify',
+                title: '初分類'
             }, {
-                data: 'Status',
-                title: '狀態'
+                data: 'secondClassify',
+                title: '細分類'
             }, {
-                data: 'EndDate',
-                title: '結案日期'
+                data: 'createTime',
+                title: '支出日期'
+            }, {
+                data: 'userId',
+                title: '支出者'
             }],
             scrollX: true,
             scrollCollapse: true,
             dom: 'Bfrtip',
             buttons: [{
                 extend: 'excel',
-                title: '',
+                title: '老公就是神的記帳方式',
                 className: 'btn-outline-secondary'
             }]
         });
@@ -161,6 +203,76 @@
             startDate: $('#startDate').val(),
             endDate: $('#endDate').val(),
         })
+    }
+
+    function addRow() {
+        if (!$('#payName').val() || !$("#payValue").val()) {
+            alert("名稱和金額是基本要填的!!!");
+            return;
+        }
+        console.log($('#payName').val());
+        console.log($('#payValue').val());
+
+        var data = {
+            payName: $('#payName').val(),
+            payValue: $("#payValue").val(),
+            command: $("#command").val(),
+            firstClassify: $("#firstClassify").val(),
+            secondClassify: $("#secondClassify").val(),
+            userId: $("#userId").val(),
+            createTime: $("#createTime").val() || new Date()
+        };
+
+        var m = Modal.bindHidden(function () {
+            if (Modal.getResult() == "ok") {
+                $.ajax({
+                    method: 'post',
+                    url: apiUrl,
+                    data: data,
+                    dataType:'text'
+                }).done(function (data) {
+                    Modal.showMessage("","成功新增");
+                }).fail(function (rs, status) {
+                    Modal.showMessage("","失敗，請找老公~~");
+                }).always(function () {
+                    search();
+                });
+            }
+        });
+        Modal.setButtonText().showConfirm("訊息", "確認要新增一筆資料???");
+
+
+    }
+
+    function deleteRow() {
+        var serial = $("#serial").val();
+        console.log(serial);
+
+        if (!serial) {
+            alert("沒序號怎麼刪啊~~");
+            return;
+        }
+        var m = Modal.bindHidden(function () {
+            if (Modal.getResult() == "ok") {
+                $.ajax({
+                    method: 'delete',
+                    url: apiUrl,
+                    data: {
+                        serial: serial,
+                    },
+                    dataType:'text'
+                }).done(function(){
+                    Modal.showMessage("","成功刪除");
+                }).fail(function(){
+                    Modal.showMessage("","失敗，請找老公~~");
+                }).always(function () {
+                    search();
+                });
+            }
+        });
+        Modal.setButtonText().showConfirm("訊息", "要刪除的序號為 : " + serial);
+
+
     }
 
     function search() {

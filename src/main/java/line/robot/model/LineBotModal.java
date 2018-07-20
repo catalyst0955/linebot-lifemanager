@@ -28,7 +28,7 @@ public class LineBotModal {
     private String command;
 
     @Column
-    private String UserId;
+    private String userId;
 
     @Column
     private Date createTime;
@@ -74,11 +74,11 @@ public class LineBotModal {
     }
 
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        UserId = userId;
+        this.userId = userId;
     }
 
     public Date getCreateTime() {

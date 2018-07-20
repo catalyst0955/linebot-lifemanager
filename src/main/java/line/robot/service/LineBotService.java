@@ -25,15 +25,15 @@ public class LineBotService {
             result = "系統錯誤";
         }else{
             LineBotModal modal = new LineBotModal();
-            DateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
-            String date = fmt.format(new Date());
-            Date d;
-            try {
-                 d = fmt.parse(date);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                d = new Date();
-            }
+            //DateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
+            //String date = fmt.format(new Date());
+            Date d = new Date();
+//            try {
+//                 d = fmt.parse(date);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//                d = new Date();
+//            }
 
             if(userId.equals("Ufd45c49f9bd95094e8a01c4d11baefde") ){
                 userId="Alexander";

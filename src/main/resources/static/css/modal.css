@@ -1,0 +1,118 @@
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    max-height: 78vh;
+    overflow-y: auto;
+    padding:0px 6px !important;
+	text-align:left;
+	text-align: justify;
+}
+.modal-content{
+	margin:15px 0;
+	min-width: 250px !important;
+	padding: 0 10px !important;
+	vertical-align: middle;
+	
+	border-radius: 8px !important;
+	display: inline-block !important;
+	max-width: 90% !important;
+	max-height: 85vh;
+}
+
+.modal-dialog .modal-footer{
+	padding: 16px 5px;
+}
+
+/* add @ 2018/06/26 , for modal win width in pc mode */
+.max-width-400-for-desktop{
+	max-width: 90% !important;
+}
+
+/* add @ 2018/06/26 , for modal win width in pc mode */
+@media (min-width: 576px) {
+  .max-width-400-for-desktop {
+    max-width:400px !important;
+  }
+}
+
+
+.modal-header {
+	border-bottom: 0px solid #fff !important;
+}
+
+.modal-dialog {
+	height: 100%;
+	max-width: 100%;
+	margin: auto 0;
+	text-align: center;
+}
+
+.modal-dialog::before {
+	content: '';
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	width: 0px;
+	height: 100%;
+}
+
+.model-close-circle-btn {
+	border: 0;
+	display: block;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	margin-top: -15px;
+	margin-right: -15px;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: #3278bc !important;
+	color: #ffffff;
+	cursor: pointer;
+}
+
+.model-close-circle-btn:before {
+	content: '';
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -1px;
+	margin-top: -11px;
+	width: 2px;
+	height: 22px;
+	background-color: #FFF;
+	border: 0px sloid red;
+	color: #ffffff;
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+.model-close-circle-btn:after {
+	content: '';
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -11px;
+	margin-top: -1px;
+	width: 22px;
+	height: 2px;
+	background-color: #FFF;
+	border: 0px sloid red;
+	color: #ffffff;
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+.modal-open .modal{
+	overflow-y: hidden;
+}
+
+
+
+
+
+
