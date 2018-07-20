@@ -31,7 +31,7 @@ public class LineBotModal {
     private String UserId;
 
     @Column
-    private Date CreateTime;
+    private Date createTime;
 
     public String getPayName() {
         return payName;
@@ -82,11 +82,11 @@ public class LineBotModal {
     }
 
     public Date getCreateTime() {
-        return CreateTime;
+        return createTime;
     }
 
     public void setCreateTime(Date createTime) {
-        CreateTime = createTime;
+        this.createTime = createTime;
     }
 
     public Integer getSerial() {
