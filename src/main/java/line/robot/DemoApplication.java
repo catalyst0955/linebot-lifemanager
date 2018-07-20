@@ -18,7 +18,7 @@ public class DemoApplication {
     static final String PATH = "https://life-manager-0520.herokuapp.com";
     public static void main(String[] args) throws IOException {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
-        LineBotService lineBotService = applicationContext.getBean(LineBotService.class);
+        //LineBotService lineBotService = applicationContext.getBean(LineBotService.class);
     }
 
 

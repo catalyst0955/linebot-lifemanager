@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -26,6 +27,14 @@ public class LineBotService {
             LineBotModal modal = new LineBotModal();
             DateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
             String date = fmt.format(new Date());
+            Date d;
+            try {
+                 d = fmt.parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                d = new Date();
+            }
+
             if(userId.equals("Ufd45c49f9bd95094e8a01c4d11baefde") ){
                 userId="Alexander";
             }else if(userId.equals("U8698476c2181ff370b4a56fe6b5ac3cf")){
@@ -43,7 +52,7 @@ public class LineBotService {
                     modal.setPayName(strList[1]);
                     modal.setPayValue(strList[2]);
                     modal.setUserId(userId);
-                    modal.setCreateTime(date);
+                    modal.setCreateTime(d);
                     break;
                 case 2:
                 case 1:

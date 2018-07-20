@@ -2,6 +2,7 @@ package line.robot.model;
 
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "accounting_line_robot")
@@ -30,7 +31,7 @@ public class LineBotModal {
     private String UserId;
 
     @Column
-    private String CreateTime;
+    private Date CreateTime;
 
     public String getPayName() {
         return payName;
@@ -80,11 +81,11 @@ public class LineBotModal {
         UserId = userId;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return CreateTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         CreateTime = createTime;
     }
 
